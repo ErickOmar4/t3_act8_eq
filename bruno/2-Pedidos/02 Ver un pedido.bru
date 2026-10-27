@@ -1,0 +1,24 @@
+meta {
+  name: 02 Ver un pedido
+  type: http
+  seq: 2
+}
+
+get {
+  url: https://dummyjson.com/carts/1
+  body: none
+  auth: none
+}
+
+assert {
+  res.status: eq 200
+  res.body.id: eq 1
+  res.body.userId: isNumber
+}
+
+docs {
+  # Ver un pedido
+
+  La app no hace esta petición, pero sirve para revisar un carrito concreto.
+  Cambia el `1` por cualquier id de la lista.
+}

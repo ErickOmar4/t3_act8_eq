@@ -1,0 +1,45 @@
+meta {
+  name: 05 Editar pedido
+  type: http
+  seq: 5
+}
+
+put {
+  url: https://dummyjson.com/carts/1
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "merge": true,
+    "products": [
+      { "id": 144, "quantity": 5 }
+    ]
+  }
+}
+
+assert {
+  res.status: eq 200
+  res.body.id: eq 1
+}
+
+tests {
+  test("conserva los productos anteriores y agrega el nuevo (merge)", function () {
+    expect(res.getBody().products.length).to.be.greaterThan(1);
+  });
+}
+
+docs {
+  # Editar pedido (PUT)
+
+  Lo usa la app en `pedidosService.updatePedidoRequest()`, después de que la persona confirma.
+
+  ## Qué deberías ver
+  Código **200** con el carrito 1 ya modificado. Con `"merge": true` se conservan los productos
+  anteriores y se suma el producto 144; sin `merge` los reemplaza. Tampoco se guarda en el servidor.
+}

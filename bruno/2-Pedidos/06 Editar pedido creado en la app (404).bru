@@ -1,0 +1,35 @@
+meta {
+  name: 06 Editar pedido creado en la app (404)
+  type: http
+  seq: 6
+}
+
+put {
+  url: https://dummyjson.com/carts/1001
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "merge": true,
+    "products": [
+      { "id": 144, "quantity": 2 }
+    ]
+  }
+}
+
+assert {
+  res.status: eq 404
+}
+
+docs {
+  # Resultado esperado: 404
+
+  Los pedidos creados en la app tienen folio mayor a 1000 y no existen en DummyJSON.
+  En este caso la app avisa "actualizado solo en la app" y aplica el cambio en su estado local.
+}

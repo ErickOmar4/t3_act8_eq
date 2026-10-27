@@ -1,0 +1,32 @@
+meta {
+  name: 03 Direccion que no existe
+  type: http
+  seq: 3
+}
+
+get {
+  url: https://nominatim.openstreetmap.org/search?q=Calle%20Inexistente%20Zzzxq%20999%2C%20Oaxaca%20de%20Ju%C3%A1rez%2C%20Oaxaca%2C%20M%C3%A9xico&format=jsonv2&addressdetails=1&limit=1&countrycodes=mx
+  body: none
+  auth: none
+}
+
+headers {
+  User-Agent: RutaOax-Pruebas (proyecto escolar de Oaxaca)
+}
+
+assert {
+  res.status: eq 200
+}
+
+tests {
+  test("la lista viene vacía (no es un error de la API)", function () {
+    expect(res.getBody().length).to.equal(0);
+  });
+}
+
+docs {
+  # Dirección que no existe
+
+  Nominatim responde **200** con una lista vacía. La app interpreta eso como que no encontró la dirección y
+  muestra "No encontramos esa dirección en Oaxaca. Revisa la calle y la colonia." sin guardar el pedido.
+}

@@ -1,0 +1,22 @@
+meta {
+  name: 03 Carritos de un usuario
+  type: http
+  seq: 3
+}
+
+get {
+  url: https://dummyjson.com/carts/user/5
+  body: none
+  auth: none
+}
+
+assert {
+  res.status: eq 200
+  res.body.carts: isArray
+}
+
+docs {
+  # Pedidos de un cliente
+  Regresa los carritos cuyo `userId` es 5. Puede venir vacío si ese cliente no tiene pedidos;
+  prueba con otros ids de usuario (1 al 208).
+}

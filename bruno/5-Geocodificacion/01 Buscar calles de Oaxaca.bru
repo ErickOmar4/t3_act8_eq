@@ -1,0 +1,45 @@
+meta {
+  name: 01 Buscar calles de Oaxaca
+  type: http
+  seq: 1
+}
+
+get {
+  url: https://nominatim.openstreetmap.org/search?q=calle&format=jsonv2&addressdetails=1&limit=40&countrycodes=mx&viewbox=-96.78,17.11,-96.68,17.02&bounded=1&accept-language=es
+  body: none
+  auth: none
+}
+
+headers {
+  User-Agent: RutaOax-Pruebas (proyecto escolar de Oaxaca)
+}
+
+assert {
+  res.status: eq 200
+  res.body: isArray
+}
+
+tests {
+  test("hay calles con coordenadas y dirección", function () {
+    const items = res.getBody();
+    expect(items.length).to.be.greaterThan(0);
+    expect(items[0]).to.have.property("lat");
+    expect(items[0]).to.have.property("lon");
+    expect(items[0]).to.have.property("address");
+  });
+}
+
+docs {
+  # Calles reales de Oaxaca
+
+  La app lo usa en `geocodingService.getLugaresEntrega()` para darle una calle, colonia y coordenadas reales
+  a cada pedido de ejemplo (antes se inventaban con JavaScript). Pide también `q=avenida`.
+
+  ## Qué deberías ver
+  Código **200** y una lista. De cada elemento la app usa: `lat`, `lon`, `address.road`,
+  `address.suburb` (colonia) y `address.house_number` si existe.
+
+  ## Reglas de Nominatim
+  Máximo **1 petición por segundo**; `limit` máximo 40. Si te bloquea (403/429), espera unos minutos.
+  `bounded=1` limita la búsqueda a la caja `viewbox` alrededor de Oaxaca de Juárez.
+}

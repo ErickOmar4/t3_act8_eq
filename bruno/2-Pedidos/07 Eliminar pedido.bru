@@ -1,0 +1,33 @@
+meta {
+  name: 07 Eliminar pedido
+  type: http
+  seq: 7
+}
+
+delete {
+  url: https://dummyjson.com/carts/1
+  body: none
+  auth: none
+}
+
+assert {
+  res.status: eq 200
+  res.body.id: eq 1
+  res.body.isDeleted: eq true
+}
+
+tests {
+  test("trae la fecha de borrado", function () {
+    expect(res.getBody()).to.have.property("deletedOn");
+  });
+}
+
+docs {
+  # Eliminar pedido (DELETE)
+
+  Lo usa la app en `pedidosService.deletePedidoRequest()`, después de la confirmación.
+
+  ## Qué deberías ver
+  Código **200** con el carrito eliminado y las claves `isDeleted: true` y `deletedOn`.
+  No se borra del servidor: puedes repetir la petición todas las veces que quieras.
+}

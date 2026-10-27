@@ -1,0 +1,49 @@
+meta {
+  name: 01 Login correcto
+  type: http
+  seq: 1
+}
+
+post {
+  url: https://dummyjson.com/auth/login
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "username": "emilys",
+    "password": "emilyspass",
+    "expiresInMins": 60
+  }
+}
+
+vars:post-response {
+  accessToken: res.body.accessToken
+}
+
+assert {
+  res.status: eq 200
+  res.body.username: eq emilys
+  res.body.firstName: eq Emily
+  res.body.image: isString
+  res.body.accessToken: isString
+}
+
+docs {
+  # Login correcto
+
+  Lo usa la app en `authService.loginRequest()`.
+
+  ## Qué deberías ver
+  Código **200** y un JSON con: `id`, `username`, `email`, `firstName`, `lastName`, `image`
+  (la foto del navbar), `accessToken` y `refreshToken`.
+
+  ## Qué cambiar
+  Cualquier usuario de https://dummyjson.com/users: la contraseña es el usuario + `pass`
+  (michaelw → michaelwpass). Ver el README de esta carpeta.
+}

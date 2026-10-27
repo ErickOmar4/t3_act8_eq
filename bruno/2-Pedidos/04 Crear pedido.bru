@@ -1,0 +1,47 @@
+meta {
+  name: 04 Crear pedido
+  type: http
+  seq: 4
+}
+
+post {
+  url: https://dummyjson.com/carts/add
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "userId": 1,
+    "products": [
+      { "id": 144, "quantity": 3 }
+    ]
+  }
+}
+
+tests {
+  test("la API acepta la creación (200 o 201)", function () {
+    expect([200, 201]).to.include(res.getStatus());
+  });
+  test("devuelve el carrito creado con id y productos", function () {
+    const body = res.getBody();
+    expect(body).to.have.property("id");
+    expect(body.products.length).to.equal(1);
+    expect(body.totalQuantity).to.equal(3);
+  });
+}
+
+docs {
+  # Crear pedido (POST)
+
+  Lo usa la app en `pedidosService.createPedidoRequest()`.
+
+  ## Qué deberías ver
+  El carrito "creado" con un id nuevo (normalmente **51**), `userId`, `products`, `totalQuantity: 3`
+  y los totales. **No se guarda en el servidor**: si lo buscas después en `/carts` no aparece.
+  Por eso la app lo agrega a su estado local con folio propio (mayor a 1000).
+}

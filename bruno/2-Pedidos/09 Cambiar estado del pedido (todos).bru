@@ -1,0 +1,37 @@
+meta {
+  name: 09 Cambiar estado del pedido (todos)
+  type: http
+  seq: 9
+}
+
+patch {
+  url: https://dummyjson.com/todos/1
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "completed": true
+  }
+}
+
+assert {
+  res.status: eq 200
+  res.body.id: eq 1
+  res.body.completed: eq true
+}
+
+docs {
+  # Cambiar el estado de un pedido
+
+  Lo usa la app en `pedidosService.syncEstadoRequest()` cada vez que cambias el estado de una parada.
+  Solo **entregado** se envía como `completed: true`; pendiente, en camino y no entregado van como `false`.
+
+  La API simula el cambio y no lo guarda. Los pedidos creados en la app (folio mayor a 1000) no se envían.
+  Prueba con `"completed": false` y con otros ids de tarea.
+}

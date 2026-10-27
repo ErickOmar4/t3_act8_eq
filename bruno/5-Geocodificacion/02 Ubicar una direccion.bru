@@ -1,0 +1,42 @@
+meta {
+  name: 02 Ubicar una direccion
+  type: http
+  seq: 2
+}
+
+get {
+  url: https://nominatim.openstreetmap.org/search?q=Avenida%20Independencia%2C%20Centro%2C%20Oaxaca%20de%20Ju%C3%A1rez%2C%20Oaxaca%2C%20M%C3%A9xico&format=jsonv2&addressdetails=1&limit=1&countrycodes=mx
+  body: none
+  auth: none
+}
+
+headers {
+  User-Agent: RutaOax-Pruebas (proyecto escolar de Oaxaca)
+}
+
+assert {
+  res.status: eq 200
+  res.body: isArray
+}
+
+tests {
+  test("encuentra la dirección y devuelve coordenadas", function () {
+    const [best] = res.getBody();
+    expect(best).to.exist;
+    expect(Number(best.lat)).to.be.within(16.9, 17.2);
+    expect(Number(best.lon)).to.be.within(-96.9, -96.5);
+  });
+}
+
+docs {
+  # Ubicar una dirección (geocodificación)
+
+  La app lo usa en `geocodingService.geocodeAddress()` al **crear un pedido** o al **editar su dirección o colonia**.
+  Primero intenta con `calle, colonia, Oaxaca de Juárez, Oaxaca, México`; si no hay resultado, lo intenta solo con la calle.
+
+  ## Qué deberías ver
+  Código **200** y una lista con 1 resultado: `lat`, `lon` y `display_name`.
+
+  ## Qué cambiar
+  El valor de `q=` (con espacios como `%20` y comas como `%2C`). Prueba con otras calles de Oaxaca.
+}

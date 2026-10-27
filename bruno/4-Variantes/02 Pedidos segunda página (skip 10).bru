@@ -1,0 +1,28 @@
+meta {
+  name: 02 Pedidos segunda página (skip 10)
+  type: http
+  seq: 2
+}
+
+get {
+  url: https://dummyjson.com/carts?limit=10&skip=10
+  body: none
+  auth: none
+}
+
+assert {
+  res.status: eq 200
+  res.body.skip: eq 10
+}
+
+tests {
+  test("la primera tarjeta de esta página es el pedido 11", function () {
+    expect(res.getBody().carts[0].id).to.equal(11);
+  });
+}
+
+docs {
+  # Página 2 (skip = 10)
+  Cambia `skip` a 20, 30, 40 para ver las demás páginas. Compara con la tabla de Pedidos en la app
+  usando `?page=2&limit=10`.
+}

@@ -1,0 +1,39 @@
+meta {
+  name: 03 Optimizar orden de paradas (OSRM trip)
+  type: http
+  seq: 3
+}
+
+get {
+  url: https://router.project-osrm.org/trip/v1/driving/-96.719,17.0505;-96.7253,17.0609;-96.7176,17.0663;-96.737,17.0242?roundtrip=false&source=first&destination=any&overview=false
+  body: none
+  auth: none
+}
+
+assert {
+  res.status: eq 200
+  res.body.code: eq Ok
+}
+
+tests {
+  test("devuelve un waypoint por cada punto enviado", function () {
+    expect(res.getBody().waypoints.length).to.equal(4);
+  });
+  test("cada waypoint trae su posición en el viaje óptimo", function () {
+    res.getBody().waypoints.forEach(function (wp) {
+      expect(wp).to.have.property("waypoint_index");
+    });
+  });
+}
+
+docs {
+  # Orden óptimo de las paradas
+
+  Lo usa la app en `routingService.optimizeStops()` al crear un recorrido y con el botón **Optimizar orden**.
+
+  El primer punto es el centro de distribución (`source=first`). En la respuesta,
+  `waypoints[i].waypoint_index` dice en qué posición del viaje queda el punto `i` que enviaste:
+  la app ordena las paradas por ese número.
+
+  Si el servidor rechaza la petición, la app usa un cálculo local (vecino más cercano) y lo avisa.
+}

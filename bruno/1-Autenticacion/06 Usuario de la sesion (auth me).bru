@@ -1,0 +1,33 @@
+meta {
+  name: 06 Usuario de la sesion (auth me)
+  type: http
+  seq: 6
+}
+
+get {
+  url: https://dummyjson.com/auth/me
+  body: none
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{accessToken}}
+}
+
+assert {
+  res.status: eq 200
+  res.body.username: eq emilys
+}
+
+docs {
+  # Validar la sesión con el token
+
+  La app lo usa en `authService.fetchCurrentUser()` cuando se recarga la página con una sesión guardada:
+  si el token venció (dura 60 minutos) la API responde 401 y la app cierra la sesión.
+
+  **Antes ejecuta "01 Login correcto"**: esa solicitud guarda el token en la variable `accessToken`.
+  Si no lo hiciste, verás 401 o un error de variable.
+
+  ## Qué deberías ver
+  Código **200** con los datos del usuario del token (`emilys`).
+}

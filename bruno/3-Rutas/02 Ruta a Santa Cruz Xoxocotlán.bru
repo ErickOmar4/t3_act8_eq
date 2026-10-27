@@ -1,0 +1,22 @@
+meta {
+  name: 02 Ruta a Santa Cruz Xoxocotlán
+  type: http
+  seq: 2
+}
+
+get {
+  url: https://router.project-osrm.org/route/v1/driving/-96.719,17.0505;-96.737,17.0242?overview=full&geometries=geojson
+  body: none
+  auth: none
+}
+
+assert {
+  res.status: eq 200
+  res.body.code: eq Ok
+}
+
+docs {
+  # Ruta con dos puntos
+  Misma petición con otro destino (Santa Cruz Xoxocotlán). Compara `distance` y `duration`
+  con la ruta de tres paradas.
+}

@@ -1,5 +1,9 @@
 # RutaOax · Logística de entregas en Oaxaca
 
+**Integrantes:** Osvaldo [Jose Jose] · Erick Omar [Santiago Ramirez]
+**API de la tabla:** DummyJSON (carritos y usuarios como pedidos)
+**Despliegue:** http://179.197.84.34/t3_act8_eq8/
+
 Mini sistema en **React + Vite** para registrar pedidos, asignarlos a vehículos con su repartidor,
 planear recorridos por día y ver la ruta de entrega en un mapa de Oaxaca.
 

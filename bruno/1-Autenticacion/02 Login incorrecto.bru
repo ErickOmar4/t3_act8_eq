@@ -1,0 +1,38 @@
+meta {
+  name: 02 Login incorrecto
+  type: http
+  seq: 2
+}
+
+post {
+  url: https://dummyjson.com/auth/login
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "username": "emilys",
+    "password": "clavemala",
+    "expiresInMins": 60
+  }
+}
+
+assert {
+  res.status: eq 400
+  res.body.message: eq Invalid credentials
+}
+
+docs {
+  # Login incorrecto
+
+  ## Qué deberías ver
+  Código **400** y `{ "message": "Invalid credentials" }`.
+
+  La app no muestra ese texto en inglés: `LoginPage` lo cambia por
+  **"Usuario o contraseña incorrectos."**
+}

@@ -1,0 +1,30 @@
+meta {
+  name: 01 Pedidos primera página (limit 10)
+  type: http
+  seq: 1
+}
+
+get {
+  url: https://dummyjson.com/carts?limit=10&skip=0
+  body: none
+  auth: none
+}
+
+assert {
+  res.status: eq 200
+  res.body.limit: eq 10
+  res.body.skip: eq 0
+}
+
+tests {
+  test("regresa exactamente 10 pedidos", function () {
+    expect(res.getBody().carts.length).to.equal(10);
+  });
+}
+
+docs {
+  # Paginación del lado del servidor
+  La app pide todos los pedidos de una vez (`limit=0`) y pagina en el navegador.
+  Con una API grande se usaría esto: `limit` = registros por página y `skip` = cuántos saltar
+  (`skip = (página - 1) * limit`). Esta es la página 1.
+}

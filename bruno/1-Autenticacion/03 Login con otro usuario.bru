@@ -1,0 +1,36 @@
+meta {
+  name: 03 Login con otro usuario
+  type: http
+  seq: 3
+}
+
+post {
+  url: https://dummyjson.com/auth/login
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "username": "michaelw",
+    "password": "michaelwpass",
+    "expiresInMins": 60
+  }
+}
+
+assert {
+  res.status: eq 200
+  res.body.username: eq michaelw
+  res.body.firstName: eq Michael
+}
+
+docs {
+  # Login con otro usuario (Michael Williams)
+
+  Sirve para comprobar que el navbar de la app cambia de nombre y foto según quién inicia sesión.
+  Otros pares que funcionan: sophiab / sophiabpass, jamesd / jamesdpass, emmaj / emmajpass.
+}

@@ -1,0 +1,54 @@
+meta {
+  name: 01 Crear documento
+  type: http
+  seq: 1
+}
+
+post {
+  url: https://jsonblob.com/api/jsonBlob
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+  Accept: application/json
+}
+
+body:json {
+  {
+    "version": 1,
+    "vehiculos": [],
+    "recorridos": [],
+    "pedidos": { "items": [], "deletedIds": [] }
+  }
+}
+
+script:post-response {
+  const location = res.getHeader("location");
+  if (location) {
+    bru.setVar("blobId", location.split("/").pop());
+  }
+}
+
+assert {
+  res.status: eq 201
+}
+
+docs {
+  # Crear el documento en línea
+
+  La app lo usa en `storageService.createWorkspaceRequest()` (botón **Crear documento en línea** del Panel).
+
+  ## Qué deberías ver
+  Código **201**. El ID del documento viene en la cabecera **Location** (pestaña *Headers* de la respuesta):
+  es lo último de la URL, por ejemplo `.../jsonBlob/1234567890`. Esta solicitud lo guarda en la variable `blobId`
+  para las siguientes.
+
+  ## Para usar este documento en la app
+  Copia ese ID y pégalo en el Panel general → *Datos en línea* → **Conectar**.
+  Si el botón "Crear documento en línea" de la app no puede leer el ID por restricciones del navegador,
+  haz este paso desde Bruno.
+
+  Si no se guardó la variable, en las siguientes solicitudes cambia `{{blobId}}` por tu ID.
+}

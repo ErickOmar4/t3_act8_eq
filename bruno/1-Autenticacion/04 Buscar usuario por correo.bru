@@ -1,0 +1,30 @@
+meta {
+  name: 04 Buscar usuario por correo
+  type: http
+  seq: 4
+}
+
+get {
+  url: https://dummyjson.com/users/filter?key=email&value=emily.johnson@x.dummyjson.com&select=username
+  body: none
+  auth: none
+}
+
+assert {
+  res.status: eq 200
+  res.body.users[0].username: eq emilys
+}
+
+docs {
+  # Buscar usuario por correo
+
+  Lo usa la app en `authService.resolveUsernameByEmail()` cuando en el login se escribe un correo
+  (DummyJSON solo inicia sesión con `username`).
+
+  ## Qué deberías ver
+  Código **200** y `{ "users": [ { "id": 1, "username": "emilys" } ], "total": 1, ... }`.
+
+  ## Qué cambiar
+  El valor de `value=` por cualquier correo de https://dummyjson.com/users
+  (formato: `nombre.apellido@x.dummyjson.com`).
+}

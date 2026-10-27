@@ -1,0 +1,29 @@
+meta {
+  name: 05 Correo que no existe
+  type: http
+  seq: 5
+}
+
+get {
+  url: https://dummyjson.com/users/filter?key=email&value=nadie@ejemplo.com&select=username
+  body: none
+  auth: none
+}
+
+assert {
+  res.status: eq 200
+}
+
+tests {
+  test("la lista de usuarios viene vacía", function () {
+    expect(res.getBody().users.length).to.equal(0);
+  });
+}
+
+docs {
+  # Correo que no existe
+
+  ## Qué deberías ver
+  Código **200** con `users: []` y `total: 0`. No es un error de la API.
+  Por eso la app revisa si llegó un usuario y, si no, muestra "Usuario o contraseña incorrectos."
+}

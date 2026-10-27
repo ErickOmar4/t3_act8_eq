@@ -1,0 +1,32 @@
+meta {
+  name: 03 Listar clientes
+  type: http
+  seq: 3
+}
+
+get {
+  url: https://dummyjson.com/users?limit=0&select=firstName,lastName,phone
+  body: none
+  auth: none
+}
+
+assert {
+  res.status: eq 200
+  res.body.users: isArray
+}
+
+tests {
+  test("cada cliente trae id, nombre y teléfono", function () {
+    const user = res.getBody().users[0];
+    expect(user).to.have.property("id");
+    expect(user).to.have.property("firstName");
+    expect(user).to.have.property("phone");
+  });
+}
+
+docs {
+  # Listar clientes
+
+  Se pide junto con los carritos. Cada carrito tiene un `userId`; con esta lista la app obtiene
+  el nombre y teléfono del cliente. `select` limita los campos que regresa la API.
+}

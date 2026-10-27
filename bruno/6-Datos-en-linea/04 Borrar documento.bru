@@ -1,0 +1,22 @@
+meta {
+  name: 04 Borrar documento
+  type: http
+  seq: 4
+}
+
+delete {
+  url: https://jsonblob.com/api/jsonBlob/{{blobId}}
+  body: none
+  auth: none
+}
+
+assert {
+  res.status: eq 200
+}
+
+docs {
+  # Borrar el documento
+
+  La app no lo usa (el botón Desconectar solo olvida el ID). Sirve para limpiar tus pruebas.
+  Después, "02 Leer documento" debe responder 404.
+}

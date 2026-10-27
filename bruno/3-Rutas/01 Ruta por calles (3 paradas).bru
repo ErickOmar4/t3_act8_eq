@@ -1,0 +1,42 @@
+meta {
+  name: 01 Ruta por calles (3 paradas)
+  type: http
+  seq: 1
+}
+
+get {
+  url: https://router.project-osrm.org/route/v1/driving/-96.719,17.0505;-96.7253,17.0609;-96.7176,17.0663?overview=full&geometries=geojson
+  body: none
+  auth: none
+}
+
+assert {
+  res.status: eq 200
+  res.body.code: eq Ok
+}
+
+tests {
+  test("trae distancia, duración y la línea de la ruta", function () {
+    const route = res.getBody().routes[0];
+    expect(route.distance).to.be.a("number");
+    expect(route.duration).to.be.a("number");
+    expect(route.geometry.coordinates.length).to.be.greaterThan(2);
+  });
+}
+
+docs {
+  # Ruta por calles (OSRM)
+
+  Lo usa la app en `routingService.fetchRoute()`.
+
+  Las coordenadas se escriben **longitud,latitud** y se separan con `;` en el orden de visita:
+  1. Centro de distribución: -96.719, 17.0505
+  2. Centro Histórico: -96.7253, 17.0609
+  3. Jalatlaco: -96.7176, 17.0663
+
+  ## Qué deberías ver
+  Código **200**, `code: "Ok"` y `routes[0]` con `distance` (metros), `duration` (segundos)
+  y `geometry.coordinates` (la línea del mapa, como pares [lng, lat]).
+
+  Es un servidor público de demostración: puede tardar unos segundos o responder 429 si se abusa.
+}

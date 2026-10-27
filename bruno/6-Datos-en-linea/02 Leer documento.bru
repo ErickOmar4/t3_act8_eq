@@ -1,0 +1,34 @@
+meta {
+  name: 02 Leer documento
+  type: http
+  seq: 2
+}
+
+get {
+  url: https://jsonblob.com/api/jsonBlob/{{blobId}}
+  body: none
+  auth: none
+}
+
+headers {
+  Accept: application/json
+}
+
+assert {
+  res.status: eq 200
+}
+
+tests {
+  test("trae vehículos y recorridos", function () {
+    const body = res.getBody();
+    expect(body).to.have.property("vehiculos");
+    expect(body).to.have.property("recorridos");
+  });
+}
+
+docs {
+  # Leer el documento
+
+  La app lo usa al iniciar (`storageService.readWorkspaceRequest()`) para cargar vehículos, recorridos y los
+  cambios hechos a los pedidos. Ejecuta antes "01 Crear documento" o cambia `{{blobId}}` por tu ID.
+}

@@ -1,0 +1,36 @@
+meta {
+  name: 01 Listar pedidos
+  type: http
+  seq: 1
+}
+
+get {
+  url: https://dummyjson.com/carts?limit=0
+  body: none
+  auth: none
+}
+
+assert {
+  res.status: eq 200
+  res.body.carts: isArray
+  res.body.total: isNumber
+}
+
+tests {
+  test("hay pedidos y cada uno trae productos", function () {
+    const body = res.getBody();
+    expect(body.carts.length).to.be.greaterThan(0);
+    expect(body.carts[0].products.length).to.be.greaterThan(0);
+  });
+}
+
+docs {
+  # Listar pedidos (carritos)
+
+  Lo usa la app en `pedidosService.fetchPedidosFromApi()`.
+
+  ## Qué deberías ver
+  Código **200** y `{ carts: [...], total, skip, limit }`. Cada carrito trae `id`, `userId`,
+  `products` (lista), `total`, `discountedTotal`, `totalProducts` y `totalQuantity`.
+  `limit=0` pide todos.
+}

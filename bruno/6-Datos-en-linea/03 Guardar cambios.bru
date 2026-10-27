@@ -1,0 +1,42 @@
+meta {
+  name: 03 Guardar cambios
+  type: http
+  seq: 3
+}
+
+put {
+  url: https://jsonblob.com/api/jsonBlob/{{blobId}}
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+  Accept: application/json
+}
+
+body:json {
+  {
+    "version": 1,
+    "vehiculos": [
+      { "id": "v1", "tipo": "Combi", "placa": "OAX-214-A", "repartidor": "Carlos Ramírez", "telefono": "9510000001", "capacidad": 25 }
+    ],
+    "recorridos": [
+      { "id": "r1", "vehiculoId": "v1", "fecha": "2026-10-24", "pedidoIds": [1, 2, 3] }
+    ],
+    "pedidos": { "items": [], "deletedIds": [] }
+  }
+}
+
+assert {
+  res.status: eq 200
+}
+
+docs {
+  # Guardar cambios
+
+  La app lo usa en `storageService.saveWorkspaceRequest()`: cada cambio en vehículos, recorridos o pedidos
+  se guarda (con 0.8 segundos de espera para juntar cambios). **Reemplaza el documento completo.**
+
+  Después ejecuta "02 Leer documento" para ver el vehículo y el recorrido guardados.
+}

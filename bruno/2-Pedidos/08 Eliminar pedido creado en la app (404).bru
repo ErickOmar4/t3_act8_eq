@@ -1,0 +1,22 @@
+meta {
+  name: 08 Eliminar pedido creado en la app (404)
+  type: http
+  seq: 8
+}
+
+delete {
+  url: https://dummyjson.com/carts/1001
+  body: none
+  auth: none
+}
+
+assert {
+  res.status: eq 404
+}
+
+docs {
+  # Resultado esperado: 404
+
+  Igual que la edición: un pedido con folio mayor a 1000 solo existe en la app.
+  La app lo elimina de su estado local y lo avisa.
+}
