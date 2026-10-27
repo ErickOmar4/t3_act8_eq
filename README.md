@@ -64,7 +64,7 @@ src/
 Mockups que sirvieron de base para la interfaz del sistema.
 
 ### Login
-![Pantalla de inicio de sesión](imagenesReadme/login.png)
+![Pantalla de inicio de sesión](imagenesReadme/Login.png)
 
 ### Panel general
 ![Panel general con resumen de pedidos y recorridos](imagenesReadme/PanelG.png)
