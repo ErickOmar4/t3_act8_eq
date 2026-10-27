@@ -58,3 +58,25 @@ src/
   pages/         una página por pantalla
   styles/        theme.css (colores) y app.css (componentes)
 ```
+
+## Diseño en Figma (Actividad 8)
+
+Mockups que sirvieron de base para la interfaz del sistema.
+
+### Login
+![Pantalla de inicio de sesión](imagenesReadme/login.png)
+
+### Panel general
+![Panel general con resumen de pedidos y recorridos](imagenesReadme/PanelG.png)
+
+### Logística (pedidos)
+![Tabla de pedidos con filtros y paginación](imagenesReadme/Logistica.png)
+
+### Vehículos
+![Registro de vehículos con repartidor asignado](imagenesReadme/Vehiculos.png)
+
+### Recorridos
+![Creación de recorridos](imagenesReadme/Recorridos.png)
+
+### Agenda de recorridos por día
+![Agenda de recorridos por día](imagenesReadme/RecorridosDias.png)
