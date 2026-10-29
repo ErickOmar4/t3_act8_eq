@@ -1,8 +1,8 @@
 # Cumplimiento de la rúbrica
 
-Para cada criterio: qué se implementó, dónde está, cómo demostrarlo y qué decir con honestidad.
 
-## 1. Login funcional con DummyJSON, validación correcta e incorrecta (6 pts)
+
+## 1. Login funcional con DummyJSON, validación correcta e incorrecta 
 
 **Qué se hizo**
 - Formulario de usuario/correo y contraseña (`pages/LoginPage.jsx`).
@@ -19,7 +19,7 @@ Para cada criterio: qué se implementó, dónde está, cómo demostrarlo y qué 
 4. `emilys` / `emilyspass` → entra al sistema.
 5. En Bruno: `01 Login correcto` (200) y `02 Login incorrecto` (400).
 
-## 2. Sidebar y navbar con datos del usuario, y protección de la vista (5 pts)
+## 2. Sidebar y navbar con datos del usuario, y protección de la vista 
 
 **Qué se hizo**
 - `components/layout/Sidebar.jsx`: 4 opciones (Panel, Pedidos, Vehículos, Recorridos por día) con la activa resaltada; en pantallas chicas es un menú deslizable.
@@ -30,9 +30,9 @@ Para cada criterio: qué se implementó, dónde está, cómo demostrarlo y qué 
 1. Ventana de incógnito → abrir `/pedidos` directamente → te manda al login → al entrar, regresa a `/pedidos`.
 2. Cerrar sesión → vuelve al login; el botón "atrás" no deja ver el sistema.
 
-**Nota honesta:** el estado `user` es la fuente de verdad, pero se copia a `sessionStorage` para sobrevivir a una recarga de la pestaña. Se borra al cerrar sesión o la pestaña. Al recargar con una sesión guardada, el token se valida con `GET /auth/me`; si venció, se cierra la sesión.
+ el estado `user` es la fuente de verdad, pero se copia a `sessionStorage` para sobrevivir a una recarga de la pestaña. Se borra al cerrar sesión o la pestaña. Al recargar con una sesión guardada, el token se valida con `GET /auth/me`; si venció, se cierra la sesión.
 
-## 3. Tabla de datos con filtros funcionando (5 pts)
+## 3. Tabla de datos con filtros funcionando 
 
 **Qué se hizo** (`pages/PedidosPage.jsx`)
 - Datos reales de DummyJSON (`/carts` + `/users`).
@@ -41,7 +41,7 @@ Para cada criterio: qué se implementó, dónde está, cómo demostrarlo y qué 
 
 **Cómo demostrarlo:** escribir "Av. Juárez", elegir estado "Pendiente", elegir una zona, limpiar. Apagar el internet y pulsar "Sincronizar con la API" para ver el error.
 
-## 4. Paginación con selector de cantidad y reflejo en la URL (7 pts)
+## 4. Paginación con selector de cantidad y reflejo en la URL 
 
 **Qué se hizo**
 - `components/ui/Pagination.jsx`: anterior/siguiente, números de página, "Mostrando 11–20 de 50" y selector **10 / 20 / 40 / 50**.
@@ -51,9 +51,9 @@ Para cada criterio: qué se implementó, dónde está, cómo demostrarlo y qué 
 
 **Cómo demostrarlo:** ir a la página 3, cambiar a 20 por página, copiar la URL en otra pestaña, usar "atrás".
 
-**Nota honesta:** se piden todos los pedidos una vez (`limit=0`) y la paginación se hace en el cliente, porque los datos se transforman y combinan localmente. Con una API grande se usarían `limit` y `skip` del servidor.
+ se piden todos los pedidos una vez (`limit=0`) y la paginación se hace en el cliente, porque los datos se transforman y combinan localmente. Con una API grande se usarían `limit` y `skip` del servidor.
 
-## 5. CRUD con llamada real a la API y reflejo en estado local (10 pts)
+## 5. CRUD con llamada real a la API y reflejo en estado local 
 
 **Qué se hizo** (`PedidosPage.jsx` + `services/pedidosService.js` + `LogisticaContext.jsx`)
 
@@ -68,11 +68,11 @@ Para cada criterio: qué se implementó, dónde está, cómo demostrarlo y qué 
 - Eliminar también quita el pedido del recorrido al que estuviera asignado.
 - Los cambios sobreviven a una recarga: se guardan en JSONBlob (o en el navegador si no hay documento conectado).
 
-**Cómo demostrarlo:** crear un pedido; editar uno (aparece la confirmación); eliminar uno (confirmación). Abrir en Bruno `2-04`, `2-05` y `2-07` para ver las mismas peticiones y sus respuestas.
+**Prueba:** crear un pedido; editar uno (aparece la confirmación); eliminar uno (confirmación). Abrir en Bruno `2-04`, `2-05` y `2-07` para ver las mismas peticiones y sus respuestas.
 
-**Nota honesta:** los pedidos creados en la app no existen en DummyJSON, así que su `PUT`/`DELETE` devuelve 404 (Bruno `2-06` y `2-08`). Para esos casos la app avisa y aplica el cambio local de todos modos. Se hace la llamada real, pero el cambio no depende de su éxito. Conviene explicarlo al presentar.
+ los pedidos creados en la app no existen en DummyJSON, así que su `PUT`/`DELETE` devuelve 404 (Bruno `2-06` y `2-08`). Para esos casos la app avisa y aplica el cambio local de todos modos. Se hace la llamada real, pero el cambio no depende de su éxito. Conviene explicarlo al presentar.
 
-## 6. Buenas prácticas de código (3 pts)
+## 6. Buenas prácticas de código
 
 | Práctica | Evidencia |
 |---|---|
@@ -83,10 +83,3 @@ Para cada criterio: qué se implementó, dónde está, cómo demostrarlo y qué 
 | Validación del login | Antes de enviar (ver criterio 1) |
 | Nombres descriptivos | `handleConfirmDelete`, `fetchPedidosFromApi`, `resolveUsernameByEmail`, `sortByNearest`… |
 | `.gitignore` | Excluye `node_modules`, `dist`, `.env` |
-| Commits descriptivos y frecuentes | Ver `docs/GUIA_COMMITS.md` (14 commits por fase) |
-
-**Importante:** el punto de commits solo cuenta si **cada integrante** los hace con su propio usuario de GitHub y se refleja el avance real. La guía es un plan; lo que se evalúa es el historial que ustedes generen.
-
-## Pendientes que dependen de ustedes
-- Comparar las pantallas con su mockup de Figma de la Actividad 7 y ajustar lo que difiera (el diseño se hizo sin verlo).
-- Ejecutar el proyecto antes de entregar y probar los casos de arriba.

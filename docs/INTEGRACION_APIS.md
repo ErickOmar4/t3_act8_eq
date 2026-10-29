@@ -28,16 +28,16 @@ convierte fallos de red en un `ApiError` con mensaje legible y usa el `message` 
 
 ## 2. Qué se reemplazó: antes JavaScript, ahora API
 
-| Qué | Antes (JavaScript) | Ahora (API) | Respaldo si la API falla |
+| Qué | Antes (JavaScript) | aplicasión (API) | Respaldo si la API falla |
 |---|---|---|---|
-| Direcciones y coordenadas de los pedidos de ejemplo | Calles, colonias y coordenadas inventadas con una función | Nominatim: se consultan calles reales de Oaxaca (`q=calle` y `q=avenida` dentro de la caja de Oaxaca) con su colonia y coordenadas, y se guardan en el navegador | Datos inventados de `config/fallbackData.js` y se avisa en pantalla |
-| Dirección de pedidos nuevos o editados | Zona elegida de una lista, coordenadas inventadas | La persona escribe calle y colonia; Nominatim las convierte en coordenadas | Ninguno: si no se encuentra la dirección, no se guarda y se muestra un mensaje |
-| Orden de las paradas | Vecino más cercano calculado en el navegador | OSRM `/trip` ordena las paradas saliendo del centro de distribución | Vecino más cercano local (`utils/geo.js`) y se avisa |
-| Vehículos, repartidores y recorridos | Solo estado de React y `localStorage`, sin API | Documento JSON en JSONBlob | Copia en `localStorage` |
-| Pedidos creados, editados y eliminados | Solo `localStorage` | Se guardan en el mismo documento de JSONBlob | Copia en `localStorage` |
-| Estado de cada pedido | Cambio solo local | Además se envía a DummyJSON `PATCH /todos/{id}` (`completed: true` solo si es *entregado*) | El estado cambia igual y se avisa |
-| Sesión | El token no se usaba | `GET /auth/me` valida el token al recargar; si venció (401) se cierra la sesión | Si no hay red, la sesión se conserva |
-| Seguimiento en tiempo real | Punto simulado con `setInterval` | Botón **Mi ubicación en vivo** con la geolocalización del navegador | La simulación se conserva como demostración |
+| Direcciones y coordenadas de los pedidos de ejemplo | | Nominatim: se consultan calles reales de Oaxaca (`q=calle` y `q=avenida` dentro de la caja de Oaxaca) con su colonia y coordenadas, y se guardan en el navegador | Datos inventados de `config/fallbackData.js` y se avisa en pantalla |
+| Dirección de pedidos nuevos o editados | | La persona escribe calle y colonia; Nominatim las convierte en coordenadas | Ninguno: si no se encuentra la dirección, no se guarda y se muestra un mensaje |
+| Orden de las paradas |  | OSRM `/trip` ordena las paradas saliendo del centro de distribución | Vecino más cercano local (`utils/geo.js`) y se avisa |
+| Vehículos, repartidores y recorridos || Documento JSON en JSONBlob | Copia en `localStorage` |
+| Pedidos creados, editados y eliminados | | Se guardan en el mismo documento de JSONBlob | Copia en `localStorage` |
+| Estado de cada pedido | | Además se envía a DummyJSON `PATCH /todos/{id}` (`completed: true` solo si es *entregado*) | El estado cambia igual y se avisa |
+| Sesión | | `GET /auth/me` valida el token al recargar; si venció (401) se cierra la sesión | Si no hay red, la sesión se conserva |
+| Seguimiento en tiempo real || Botón **Mi ubicación en vivo** con la geolocalización del navegador | La simulación se conserva como demostración |
 
 ## 3. Flujos
 
@@ -74,15 +74,10 @@ Estas partes no tienen una API pública que las resuelva o es mejor resolverlas 
 - **Nominatim:** máximo 1 petición por segundo (la app espera 1.1 s entre peticiones) y no se usa para autocompletar.
   La consulta de calles se hace una vez y se guarda en el navegador.
 - **OSRM público:** es un servidor de demostración; puede tardar o limitar peticiones.
-- **JSONBlob es público:** cualquiera que tenga el ID puede leer o modificar el documento. Usa solo datos de práctica
-  y no compartas el ID fuera del equipo. Si dos personas guardan al mismo tiempo, gana el último guardado.
+- **JSONBlob es público:** cualquiera que tenga el ID puede leer o modificar el documento. Si dos personas guardan al mismo tiempo, gana el último guardado.
   El servicio puede borrar documentos inactivos.
 - **DummyJSON** simula las escrituras: nada de lo que envía se guarda de verdad.
 - Estas integraciones no se pudieron ejecutar al preparar el proyecto (sin red en el entorno de desarrollo);
   la colección de Bruno sirve para comprobar cada una antes de entregar.
 
-## 6. Con un backend propio
 
-Los puntos de persistencia (JSONBlob y los pedidos locales) se reemplazarían por una base de datos con CRUD por registro;
-la geocodificación se haría al registrar el pedido en el servidor; el seguimiento usaría la ubicación enviada por la app de cada repartidor;
-y los filtros y la paginación pasarían al servidor (`limit` y `skip`).

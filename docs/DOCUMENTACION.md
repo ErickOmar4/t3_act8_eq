@@ -121,31 +121,3 @@ Pedido    { id, local, cliente, telefono, direccion, zona, lat, lng, articulos, 
 Vehiculo  { id, tipo, placa, repartidor, telefono, capacidad }
 Recorrido { id, vehiculoId, fecha: 'AAAA-MM-DD', pedidoIds: [ids en orden de visita] }
 ```
-## 8. Trabajo en equipo con Git (requisito de la actividad)
-
-La tabla completa de 14 commits, con los comandos y la explicación de cada uno, está en [GUIA_COMMITS.md](GUIA_COMMITS.md). Resumen:
-
-Cada integrante debe trabajar con **su propio usuario de Git** y hacer commits frecuentes. Una división posible:
-
-| Persona | Fase | Ejemplos de commits |
-|---|---|---|
-| Integrante A | Fase 1 y 2 | `feat(login): formulario con validaciones`, `feat(auth): conectar con DummyJSON`, `feat(layout): sidebar y navbar`, `feat(auth): proteger rutas` |
-| Integrante B | Fase 3 | `feat(pedidos): tabla con datos de la API`, `feat(pedidos): filtros y paginación en URL`, `feat(pedidos): crear, editar y eliminar con confirmación` |
-| Ambos | Extra | `feat(vehiculos): registro de vehículos`, `feat(recorridos): agenda por día`, `feat(mapa): ruta con Leaflet y OSRM`, `docs: documentación` |
-
-```bash
-git init
-git config user.name "Tu nombre"
-git config user.email "tu-correo@ejemplo.com"
-git add .
-git commit -m "chore: proyecto base con Vite y React"
-```
-## 9. Limitaciones conocidas
-
-- Las integraciones con Nominatim, OSRM y JSONBlob no se pudieron ejecutar al preparar el proyecto (sin red en el entorno de desarrollo).
-  Pruébalas con la colección de Bruno y revisa el comportamiento en el navegador antes de entregar.
-- Nominatim limita a 1 petición por segundo; la primera carga de pedidos tarda unos segundos extra mientras consulta las calles.
-- Los servidores públicos de OSRM y Nominatim son de uso moderado; para producción conviene alojar los propios.
-- JSONBlob es público: cualquiera con el ID puede leer o modificar el documento. Usa solo datos de práctica.
-- Si dos personas guardan al mismo tiempo, gana el último guardado.
-- Si publicas el proyecto como sitio estático, configura que todas las rutas apunten a `index.html` (por usar `BrowserRouter`).

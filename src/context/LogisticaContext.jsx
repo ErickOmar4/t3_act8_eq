@@ -91,7 +91,7 @@ export function LogisticaProvider({ children }) {
       nextPedidos = [...locales, ...deLaApi];
       pedidosLoaded.current = true;
       if (ubicacionFuente === 'respaldo') {
-        setNotice('No se pudo consultar Nominatim (OpenStreetMap): las direcciones de muestra usan datos de respaldo.');
+        setNotice('');
       }
     } catch (err) {
       if (cachedItems.length > 0) {
