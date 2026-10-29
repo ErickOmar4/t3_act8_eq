@@ -80,3 +80,26 @@ Mockups que sirvieron de base para la interfaz del sistema.
 
 ### Agenda de recorridos por día
 ![Agenda de recorridos por día](imagenesReadme/RecorridosDias.png)
+
+# pruebas de bruno
+
+
+## logueo 
+![alt text](imagenesReadme/logueo.png)
+
+## informacion de secion 
+![alt text](imagenesReadme/p_info_usuario.png)
+
+## listar pedidos
+
+https://dummyjson.com/carts?limit=0
+
+![alt text](imagenesReadme/p_listarpe_pedidos.png)
+
+
+## crear pedido
+![alt text](imagenesReadme/p_crear_pedido.png)
+
+## eliminar pedido
+
+![alt text](imagenesReadme/eliminar_pedido.png)
